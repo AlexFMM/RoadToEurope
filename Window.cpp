@@ -1,6 +1,5 @@
 #include "Window.h"
 #include "alg.h"
-#include "City.h"
 
 using namespace System;
 using namespace System::Windows::Forms;
@@ -16,12 +15,7 @@ void Main(array<String^>^ args){
 
 	loadFile(dist, distancias);// load da tabela das distancias
 	loadFile(cost, custo);// load da tabela das distancias
-	paises=loadFile(time, custo);// load da tabela das tempo
-	City cidades[15];
-
-	for (int i = 0; i < 15; i++){
-		cidades[i].change(paises[i], i);
-	}
+	paises=loadFile(time, tempo);// load da tabela das tempo
 
 	Application::EnableVisualStyles();
 	Application::SetCompatibleTextRenderingDefault(false);

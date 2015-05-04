@@ -182,6 +182,9 @@ namespace RoadToEurope {
 
 
 	private: System::Void Go_Click(System::Object^  sender, System::EventArgs^  e) {
+		Solucao->Clear();
+		caminho.clear();
+		float tot=0;
 		if (OriSel->SelectedIndex == -1 || DestSel->SelectedIndex == -1){
 			MessageBox::Show("Selecione a origem e o destino.");
 		}
@@ -192,7 +195,47 @@ namespace RoadToEurope {
 			MessageBox::Show("Selecione um tipo.");
 		}
 		else{
-			//correr algoritmo
+			switch (TipSel->SelectedIndex)
+			{
+			case 0:
+				tot=algoritmo(OriSel->SelectedIndex, DestSel->SelectedIndex, caminho, distancias);
+				Solucao->AppendText(getSystemString("A rota que percorre menos distância começando em " + paises[OriSel->SelectedIndex] + " e terminando em " + paises[DestSel->SelectedIndex] + " segue o percurso : "));
+				for (int i = 0; i < (int)caminho.size(); i++){
+					Solucao->AppendText(getSystemString(paises[caminho[i]]));
+					if (i<(int)caminho.size() - 1)
+						Solucao->AppendText(getSystemString(", "));
+				}
+				Solucao->AppendText(getSystemString(" percorrendo um total de "));
+				Solucao->AppendText(tot.ToString());
+				Solucao->AppendText(getSystemString("Km"));
+				break;
+			case 1:
+				tot=algoritmo(OriSel->SelectedIndex, DestSel->SelectedIndex, caminho, custo);
+				Solucao->AppendText(getSystemString("A rota que percorre com menor custo começando em " + paises[OriSel->SelectedIndex] + " e terminando em " + paises[DestSel->SelectedIndex] + " segue o percurso : "));
+				for (int i = 0; i < (int)caminho.size(); i++){
+					Solucao->AppendText(getSystemString(paises[caminho[i]]));
+					if (i<(int)caminho.size() - 1)
+						Solucao->AppendText(getSystemString(", "));
+				}
+				Solucao->AppendText(getSystemString(" gastando um total de "));
+				Solucao->AppendText(tot.ToString());
+				Solucao->AppendText(getSystemString("€"));
+				break;
+			case 2:
+				tot=algoritmo(OriSel->SelectedIndex, DestSel->SelectedIndex, caminho, tempo);
+				Solucao->AppendText(getSystemString("A rota que percorre menos tempo começando em " + paises[OriSel->SelectedIndex] + " e terminando em " + paises[DestSel->SelectedIndex] + " segue o percurso : "));
+				for (int i = 0; i < (int)caminho.size(); i++){
+					Solucao->AppendText(getSystemString(paises[caminho[i]]));
+					if (i<(int)caminho.size() - 1)
+						Solucao->AppendText(getSystemString(", "));
+				}
+				Solucao->AppendText(getSystemString(" levando um total de "));
+				Solucao->AppendText(tot.ToString());
+				Solucao->AppendText(getSystemString("H"));
+				break;
+			default:
+				break;
+			}	
 		}
 	}
 };
